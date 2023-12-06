@@ -1,35 +1,31 @@
 #!/usr/bin/python3
-""" Console Module """
+"""Defines the HBNB console."""
 import cmd
-import sys
+from shlex import split
+from models import storage
 from datetime import datetime
 from models.base_model import BaseModel
-from models import storage
 from models.user import User
-from models.place import Place
 from models.state import State
 from models.city import City
 from models.amenity import Amenity
+from models.place import Place
 from models.review import Review
 
 
 class HBNBCommand(cmd.Cmd):
-    """ Contains the functionality for the HBNB console"""
+    """Defines the HolbertonBnB command interpreter."""
 
-    # determines prompt for interactive/non-interactive modes
-    prompt = '(hbnb) ' if sys.__stdin__.isatty() else ''
-
-    classes = {
-               'BaseModel': BaseModel, 'User': User, 'Place': Place,
-               'State': State, 'City': City, 'Amenity': Amenity,
-               'Review': Review
-              }
-    dot_cmds = ['all', 'count', 'show', 'destroy', 'update']
-    types = {
-             'number_rooms': int, 'number_bathrooms': int,
-             'max_guest': int, 'price_by_night': int,
-             'latitude': float, 'longitude': float
-            }
+    prompt = "(hbnb) "
+    __classes = {
+        "BaseModel",
+        "User",
+        "State",
+        "City",
+        "Amenity",
+        "Place",
+        "Review"
+    }
 
     def do_quit(self, line):
         """Quit command to exit the program."""
