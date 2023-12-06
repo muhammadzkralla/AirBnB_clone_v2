@@ -23,7 +23,8 @@ def do_pack():
     # Check if the archive was created successfully
     if result.succeeded:
         archive_path = "versions/{}".format(archive_name)
-        print("web_static packed: {} -> {}Bytes".format(archive_path, os.path.getsize(archive_path)))
+        print("web_static packed: {} -> {}Bytes".format(archive_path,
+              os.path.getsize(archive_path)))
         return archive_path
     else:
         return None
