@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Sets up a web server for deployment of web_static.
+# # Creates a webpage at /hbnb_static/index.html.
 
 apt-get update
 apt-get install -y nginx
@@ -7,12 +7,14 @@ apt-get install -y nginx
 mkdir -p /data/web_static/releases/test/
 mkdir -p /data/web_static/shared/
 echo "Holberton School" > /data/web_static/releases/test/index.html
-ln -sf /data/web_static/releases/test/ /data/web_static/current
+
 
 chown -R ubuntu /data/
 chgrp -R ubuntu /data/
 
-printf %s "server {
+ln -sf /data/web_static/releases/test/ /data/web_static/current
+
+sudo echo "server {
     listen 80 default_server;
     listen [::]:80 default_server;
     add_header X-Served-By $HOSTNAME;
