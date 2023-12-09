@@ -4,8 +4,6 @@ import os.path
 from fabric.api import *
 
 env.hosts = ["54.236.44.9", "3.90.65.191"]
-env.user = 'ubuntu'
-env.key_filename = 'rsa'
 
 def do_deploy(archive_path):
     if os.path.isfile(archive_path) is False:
