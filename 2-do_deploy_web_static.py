@@ -1,11 +1,18 @@
 #!/usr/bin/python3
-# Deploy archived files with Fabric.
+# Deploy archived archive_archive_filearchive_no_extarchive_no_exts with Fabric.
 import os.path
 from fabric.api import *
 
 env.hosts = ["54.236.44.9", "3.90.65.191"]
 
 def do_deploy(archive_path):
+    """Deploys some arhived folder to two servers..
+
+    Args:
+        archive_path (str): The archive_archive_filearchive_no_extarchive_no_ext to be uploaded.
+    Returns:
+        True if success, false if not
+    """
     if os.path.isfile(archive_path) is False:
         return False
 
@@ -23,7 +30,7 @@ def do_deploy(archive_path):
         run("rm -rf /data/web_static/releases/{}/web_static".format(archive_no_ext))
         run("rm -rf /data/web_static/current")
         run("ln -s /data/web_static/releases/{}/ /data/web_static/current".format(archive_filename))
-    
+
         print("New version deployed!")
         return True
 
