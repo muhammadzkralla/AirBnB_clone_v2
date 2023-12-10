@@ -68,3 +68,10 @@ def do_deploy(archive_path):
            format(name)).failed is True:
         return False
     return True
+
+def deploy():
+    """Pack n Deploy."""
+    packed = do_pack()
+    if packed is None:
+        return False
+    return do_deploy(packed)
