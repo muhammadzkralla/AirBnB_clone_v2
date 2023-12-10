@@ -2,7 +2,7 @@
 # Pack n Deploy!
 
 from datetime import datetime
-from fabric.api import local
+from fabric.api import *
 import os
 
 env.hosts = ["54.236.44.9", "3.90.65.191"]
