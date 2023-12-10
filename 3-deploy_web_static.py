@@ -8,30 +8,35 @@ import os
 env.hosts = ["54.236.44.9", "3.90.65.191"]
 
 def do_pack():
-    """Create a tar gzipped archive of the directory web_static."""
-    dt = datetime.utcnow()
-    file = "versions/web_static_{}{}{}{}{}{}.tgz".format(dt.year,
-                                                         dt.month,
-                                                         dt.day,
-                                                         dt.hour,
-                                                         dt.minute,
-                                                         dt.second)
-    if os.path.isdir("versions") is False:
-        if local("mkdir -p versions").failed is True:
-            return None
-    if local("tar -cvzf {} web_static".format(file)).failed is True:
-        return None
-    return file
+    """Generates a .tgz archive from the contents of the web_static folder."""
 
+    # Create the versions folder if it doesn't exist
+    if not os.path.exists("versions"):
+        os.makedirs("versions")
+
+    # Generate the archive filename using the current date and time
+    now = datetime.now().strftime("%Y%m%d%H%M%S")
+    archive_name = "web_static_" + now + ".tgz"
+
+    # Compress the web_static folder into the archive
+    result = local("tar -czvf versions/{} web_static".format(archive_name))
+
+    # Check if the archive was created successfully
+    if result.succeeded:
+        archive_path = "versions/{}".format(archive_name)
+        print("web_static packed: {} -> {}Bytes".format(archive_path,
+              os.path.getsize(archive_path)))
+        return archive_path
+    else:
+        return None
 
 def do_deploy(archive_path):
-    """Distributes an archive to a web server.
+    """Deploys some arhived folder to two servers..
 
     Args:
-        archive_path (str): The path of the archive to distribute.
+        archive_path (str): The archive file to be uploaded.
     Returns:
-        If the file doesn't exist at archive_path or an error occurs - False.
-        Otherwise - True.
+        True if success, false if not
     """
     if os.path.isfile(archive_path) is False:
         return False
@@ -64,10 +69,9 @@ def do_deploy(archive_path):
         return False
     return True
 
-
 def deploy():
-    """Create and distribute an archive to a web server."""
-    file = do_pack()
-    if file is None:
+    """Pack n Deploy."""
+    packed = do_pack()
+    if packed is None:
         return False
-    return do_deploy(file)
+    return do_deploy(packed)
