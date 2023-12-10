@@ -5,11 +5,12 @@ from fabric.api import *
 
 env.hosts = ["54.236.44.9", "3.90.65.191"]
 
+
 def do_deploy(archive_path):
     """Deploys some arhived folder to two servers..
 
     Args:
-        archive_path (str): The archive_archive_filearchive_no_extarchive_no_ext to be uploaded.
+        archive_path (str): The archive file to be uploaded.
     Returns:
         True if success, false if not
     """
